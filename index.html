@@ -1,54 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en-us">
 
-<head>
+  <head>
 
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>Train Times | Jonathan Ansley</title>
 
-  <title>Giphy API - Star Trek | Jonathan Ansley</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
-  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 
-  <!-- Optional theme -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"> -->
+    <!-- Moment.js Reference -->
+    <!-- <script src="http://momentjs.com/downloads/moment.js"></script>   -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
 
-</head>
+  <body>
 
-<body>
+    <!-- Employee Tracker -->
+    <div class="container">
 
-<div id = "wrapper">
+      <!-- Jumbotron -->
+      <div class="jumbotron" style="background-color: black; color: white">
+        <h1 class="text-center">Train Scheduler</h1>
+        <h3 class="text-center">Enter and Find Train Times</h3>
+      </div>
 
-  <div class="jumbotron">
-    <h1 id = "title">Star Trek GIFs</h1>
-  </div>
+      <div class="row">
 
-<button id="gif-button">GIF button</button>
+        <div class="col-lg-12">
 
-  <div id="images">
-  </div>
+        <!-- Current Employees-->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Current Employees</strong></h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-hover" id='employee-table'>
+                <thead>
+                  <tr>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency (minutes)</th>
+                    <th>Next Arrival</th>
+                    <th>Minutes Away</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
+          <!-- Add Employee  -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Add Train</strong></h3>
+            </div>
+            <div class="panel-body">
 
- <!-- jQuery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+              <!-- Entry Form -->
+              <form>
+                <div class="form-group">
+                  <label for="employee-name-input">Train Name</label>
+                  <input class="form-control" id="employee-name-input" type="text">
+                </div>
 
-  <!-- Script -->
-  <script type="text/javascript" src="assets/javascript/app.js"></script>
+                <div class="form-group">
+                  <label for="role-input">Destination</label>
+                  <input class="form-control" id="role-input" type="text">
+                </div>
 
-</div>
-<!-- end of wrapper div -->
+                <div class="form-group">
+                  <label for="start-input">First Train Time (hh:mm - mililtary time)</label>
+                  <input class="form-control" id="start-input" type="text">
+                </div>
 
-</body>
+                <div class="form-group">
+                  <label for="rate-input">Frequency (minutes)</label>
+                  <input class="form-control" id="rate-input" type="text">
+                </div>
+                
+                <button class="btn btn-primary" id="add-employee-btn" type="submit">Submit</button>
+              </form>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+
+  </body>
 
 </html>
-
-
-
-
