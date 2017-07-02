@@ -28,7 +28,7 @@
 
   <body>
 
-    <!-- Employee Tracker -->
+    <!-- train Tracker -->
     <div class="container">
 
       <!-- Jumbotron -->
@@ -41,14 +41,19 @@
 
         <div class="col-lg-12">
 
-        <!-- Current Employees-->
+        <!-- Current trains-->
           <div class="panel panel-primary">
+
             <div class="panel-heading">
-              <h3 class="panel-title"><strong>Current Employees</strong></h3>
+              <h3 class="panel-title"><strong>Current Trains</strong></h3>
             </div>
+
             <div class="panel-body">
-              <table class="table table-hover" id='employee-table'>
+
+              <table class="table table-hover" id='train-table'>
+
                 <thead>
+
                   <tr>
                     <th>Train Name</th>
                     <th>Destination</th>
@@ -56,25 +61,33 @@
                     <th>Next Arrival</th>
                     <th>Minutes Away</th>
                   </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-          </div>
 
-          <!-- Add Employee  -->
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div> <!-- end of "panel panel-primary"> -->
+
+          <!-- Add train  -->
           <div class="panel panel-primary">
+
             <div class="panel-heading">
               <h3 class="panel-title"><strong>Add Train</strong></h3>
-            </div>
+            </div> <!-- end of "panel-heading" -->
+
             <div class="panel-body">
 
               <!-- Entry Form -->
               <form>
                 <div class="form-group">
-                  <label for="employee-name-input">Train Name</label>
-                  <input class="form-control" id="employee-name-input" type="text">
+                  <label for="train-name-input">Train Name</label>
+                  <input class="form-control" id="train-name-input" type="text">
                 </div>
 
                 <div class="form-group">
@@ -91,9 +104,10 @@
                   <label for="rate-input">Frequency (minutes)</label>
                   <input class="form-control" id="rate-input" type="text">
                 </div>
-                
-                <button class="btn btn-primary" id="add-employee-btn" type="submit">Submit</button>
-              </form>
+
+                <button class="btn btn-primary" id="add-train-btn" type="submit">Submit</button>
+
+              </form> <!-- Entry Form -->
 
             </div>
 

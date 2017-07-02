@@ -1,126 +1,119 @@
-// This code will run as soon as the page loads
-window.onload = function() {
+/* global firebase moment */
+// Steps to complete:
 
-  alert('JavaScript file - window.onload');
+// 1. Initialize Firebase
+// 2. Create button for adding new trains - then update the html + update the database
+// 3. Create a way to retrieve trains from the database.
+// 4. Create a way to calculate the months worked.
+//    Using difference between start and current time.
+//    Then use moment.js formatting to set difference in months.
+// 5. Calculate Total billed
+
+
+
+
+// 1. Initialize Firebase
+var config = {
+
+  // apiKey: "AIzaSyA_QypGPkcjPtylRDscf7-HQl8ribnFeIs",
+  apiKey: "AIzaSyDC7GTBBx-lqdIkR0AhnHJLl3-ZbwXXRKY",  
+
+  // authDomain: "time-sheet-55009.firebaseapp.com",
+  authDomain: "testing-firebase-57397.firebaseapp.com",
+  
+  // databaseURL: "https://time-sheet-55009.firebaseio.com",
+  databaseURL: "https://testing-firebase-57397.firebaseio.com",
+  
+  // storageBucket: "time-sheet-55009.appspot.com"
+  storageBucket: "testing-firebase-57397.appspot.com"
 
 };
 
+firebase.initializeApp(config);
+
+var database = firebase.database();
 
 
 
 
-// Take the topics in the array and create buttons in your HTML.
-// Use a for a loop that appends a button for each string in the array.
-for (var i = topics.length - 1; i >= 0; i--) {
-  topics[i]
-  $('<button>' id="gif-button">GIF button</button>
-}
+// 2. Button for adding trains
+$("#add-train-btn").on("click", function(event) {
+  event.preventDefault();
+
+  // Grabs user input
+  var trainName = $("#train-name-input").val().trim();
+  var trainRole = $("#role-input").val().trim();
+  var trainStart = moment($("#start-input").val().trim(), "DD/MM/YY").format("X");
+  var trainRate = $("#rate-input").val().trim();
+
+  // Creates local "temporary" object for holding train data
+  var newTrain = {
+    name: trainName,
+    role: trainRole,
+    start: trainStart,
+    rate: trainRate
+  };
+
+  // Uploads train data to the database
+  database.ref().push(newTrain);
+
+  // Logs everything to console
+  console.log(newTrain.name);
+  console.log(newTrain.role);
+  console.log(newTrain.start);
+  console.log(newTrain.rate);
+
+  // Alert
+  alert("train successfully added");
+
+  // Clears all of the text-boxes
+  $("#train-name-input").val("");
+  $("#role-input").val("");
+  $("#start-input").val("");
+  $("#rate-input").val("");
+});
 
 
 
 
+// 3. Create Firebase event for adding train to the database and a row in the html when a user adds an entry
+database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
-// 3. When the user clicks on a button, the page should grab 10 static,
-// non-animated gif images from the GIPHY API and place them on the page. 
+  console.log(childSnapshot.val());
 
+  // Store everything into a variable.
+  var trainName = childSnapshot.val().name;
+  var trainRole = childSnapshot.val().role;
+  var trainStart = childSnapshot.val().start;
+  var trainRate = childSnapshot.val().rate;
 
+  // train Info
+  console.log(trainName);
+  console.log(trainRole);
+  console.log(trainStart);
+  console.log(trainRate);
 
+  // Prettify the train start
+  var trainStartPretty = moment.unix(trainStart).format("MM/DD/YY");
 
-// 4. When the user clicks one of the still GIPHY images, the gif should animate.
-// If the user clicks the gif again, it should stop playing.
+  // Calculate the months worked using hardcore math
+  // To calculate the months worked
+  var trainMonths = moment().diff(moment.unix(trainStart, "X"), "months");
+  console.log(trainMonths);
 
+  // Calculate the total billed rate
+  var trainBilled = trainMonths * trainRate;
+  console.log(trainBilled);
 
+  // Add each train's data into the table
+  $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainRole + "</td><td>" +
+  trainStartPretty + "</td><td>" + trainMonths + "</td><td>" + trainRate + "</td><td>" + trainBilled + "</td></tr>");
+});
 
+// Example Time Math
+// -----------------------------------------------------------------------------
+// Assume train start date of January 1, 2015
+// Assume current date is March 1, 2016
 
-// 5. Under every gif, display its rating (PG, G, so on). 
-//    * This data is provided by the GIPHY API.
-
-
-
-
-
-
-
-//    * Only once you get images displaying with button presses
-// should you move on to the next step.
-
-
-
-
-// 6. Add a form to your page takes the value from a user input box
-// and adds it into your `topics` array.
-// Then make a function call that takes each topic in the array remakes
-// the buttons on the page.
-
-
-
-
-// original buttons
-var topics = [ 'Star Trek', 'Captain Kirk', 'Khan' ];
-
-// GIF parameters
-var gifLimit = 10;
-var gifRating = 'G';
-
-    // Event listener for our buttons
-    $("#gif-button").on("click", function() {
-
-
-
-
-//    * switch the protocol in the query URL from **`http to https`**,
-// or the app may not work properly when deployed to Github Pages.
-
-
-
-      // public beta API key
-      var apiKey = 'dc6zaTOxFJmzC';
-
-      // Storing our giphy API URL for a random gif image
-      var queryURL = 'https://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5'
-      
-      // var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=trek";
-
-      // Perfoming an AJAX GET request to our queryURL
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      })
-
-      // After the data from the AJAX request comes back
-      .done(function(response) {
-
-        console.log(response);
-
-        for (var i = response.data.length - 1; i >= 0; i--) {
-          response.data[i]
-          var gifDiv = $('<div>')
-          var p = $('<p>').text('Rating: '+ response.data[i].rating);
-
-          // Creating and storing an image tag
-          var gifImage = $('<img>');
-
-          gifImage.attr('src', response.data[i].images.fixed_height_url)
-
-          gifDiv.append(p);
-
-          gifDiv.append(gifImage);
-
-          // Prepending the gifImage to the images div
-          $('#images').prepend(gifImage);
-
-        }
-
-        // Saving the image_original_url property
-        var imageUrl = response.data.image_original_url;
-
-        // Saving the image's rating property
-        var imageRating = response.data.rating;
-
-        // Setting the gifImage src attribute to imageUrl
-        gifImage.attr("src", imageUrl);
-        gifImage.attr("alt", "gif image");
-
-        
-      });
-    });
+// We know that this is 15 months.
+// Now we will create code in moment.js to confirm that any attempt we use mets this test case
