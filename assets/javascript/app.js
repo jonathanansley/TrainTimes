@@ -47,15 +47,13 @@ $("#add-train-btn").on("click", function(event) {
   database.ref().push(newTrain);
 
   // Logs everything to console
-  console.log(newTrain.name);
-  console.log(newTrain.destination);
-  console.log(newTrain.first);
-  console.log(newTrain.frequency);
+  console.log('newTrain.name = ' + newTrain.name);
+  console.log('newTrain.destination = ' + newTrain.destination);
+  console.log('newTrain.first = ' + newTrain.first);
+  console.log('newTrain.frequency = ' + newTrain.frequency);
 
   // Alert
   alert("train successfully added");
-
-  // $('#add-train-btn').modal(options)
 
   // Clears all of the text-boxes
   $("#train-name-input").val("");
@@ -90,6 +88,9 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
 
 // *********************************************
+
+  console.log('trainFirstTime = ' + trainFirstTime);
+
   // Prettify the train first time
   var trainFirstTimePretty = moment.unix(trainFirstTime).format("hh:mm");
   console.log('trainFirstTimePretty = ' + trainFirstTimePretty);
@@ -107,9 +108,15 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     // 7 - 2 = 5 minutes away
     // 5 + 3:16 = 3:21
 
+
+
+
     // First Time (pushed back 1 year to make sure it comes before current time)
-    var trainFirstTimeConverted = moment(trainFirstTime, "hh:mm").subtract(1, "years");
-    console.log('trainFirstTimeConverted = ' + trainFirstTimeConverted);
+    // var trainFirstTimeConverted = moment(trainFirstTime, "hh:mm").subtract(1, "years");
+    // console.log('trainFirstTimeConverted = ' + trainFirstTimeConverted);
+
+
+
 
 
 
@@ -119,22 +126,28 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     console.log("Current Time: " + moment(currentTime).format("hh:mm"));
 
     // Difference between the times
-    var diffTime = moment().diff(moment(trainFirstTimeConverted), "minutes");
+    var diffTime = moment().diff(moment(trainFirstTime), "minutes");
     console.log("Difference in Time (diffTime): " + diffTime);
+    //The console is saying NaN.
 
     // Time apart (remainder)
     var tRemainder = diffTime % trainFrequency;
     console.log('tRemainder = ' + tRemainder);
+    //The console is saying NaN.
 
     // Minute Until Train
     var tMinutesTillTrain = trainFrequency - tRemainder;
     console.log("Minutes Until Train: " + tMinutesTillTrain);
+    //The console is saying NaN.
 
     // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
 
-// *********************************************
+
+
+  // *********************************************
+
   // Add each train's data into the table
   $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" +
   trainFrequency + "</td><td>" + nextTrain + "</td><td>" + tMinutesTillTrain + "</td><td>");
