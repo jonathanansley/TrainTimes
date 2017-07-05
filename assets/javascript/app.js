@@ -126,7 +126,8 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     console.log("Current Time: " + moment(currentTime).format("hh:mm"));
 
     // Difference between the times
-    var diffTime = moment().diff(moment(trainFirstTime), "minutes");
+    var diffTime = moment().diff(moment.unix(trainFirstTime), "minutes"); 
+
     console.log("Difference in Time (diffTime): " + diffTime);
     //The console is saying NaN.
 
@@ -142,7 +143,13 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
     // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+
+    var nextTrainPretty = moment.unix(nextTrain).format("hh:mm");
+
     console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
+    console.log("Arrival Time Pretty: " + nextTrainPretty);
+  
+
 
 
 
@@ -150,5 +157,5 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
   // Add each train's data into the table
   $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" +
-  trainFrequency + "</td><td>" + nextTrain + "</td><td>" + tMinutesTillTrain + "</td><td>");
+  trainFrequency + "</td><td>" + nextTrainPretty + "</td><td>" + tMinutesTillTrain + "</td><td>");
 });
